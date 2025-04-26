@@ -228,12 +228,23 @@ int client_main() {
 	//add string concat for player=
 	cout << "Please type your name here: ";
 	char user_entered_name[DEFAULT_BUFLEN] = {};
-	char player_name_header[7] = { 'P', 'l', 'a', 'y', 'e', 'r', '=' };
 	char player_name[DEFAULT_BUFLEN] = {};
 
+	player_name[0] = 'P';
+	player_name[1] = 'l';
+	player_name[2] = 'a';
+	player_name[3] = 'y';
+	player_name[4] = 'e';
+	player_name[5] = 'r';
+	player_name[6] = '=';
 	cin.getline(user_entered_name, DEFAULT_BUFLEN);
-	strcpy_s(player_name, player_name_header);
-	strcat_s(player_name, user_entered_name);
+
+	for (int i = 7; i < DEFAULT_BUFLEN; i++) {
+		player_name[i] = user_entered_name[i - 7];
+	}
+
+
+	//cin.getline(player_name, DEFAULT_BUFLEN);
 
 	bool boolChallenge = false;
 	while (boolChallenge == false) {
