@@ -232,8 +232,8 @@ int client_main() {
 	char player_name[DEFAULT_BUFLEN] = {};
 
 	cin.getline(user_entered_name, DEFAULT_BUFLEN);
-	std::strcpy(player_name, player_name_header);
-	std::strcat(player_name, user_entered_name);
+	strcpy_s(player_name, player_name_header);
+	strcat_s(player_name, user_entered_name);
 
 	cin.getline(player_name, DEFAULT_BUFLEN);
 
