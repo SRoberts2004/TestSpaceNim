@@ -113,13 +113,21 @@ int server_main() {
 	int recvbuflen = DEFAULT_BUFLEN;
 	char recvbuf[DEFAULT_BUFLEN] = {};
 	char sendbuf[DEFAULT_BUFLEN] = {};
-	char server_name[DEFAULT_BUFLEN] = {};
 
-
-	//add string concat for name=
+	char entered_server_name[DEFAULT_BUFLEN] = {};
 	cout << "Enter your name here: ";
-	cin.getline(server_name, DEFAULT_BUFLEN);
-	//strcat_s(memberList, newMemberName);
+	cin.getline(entered_server_name, DEFAULT_BUFLEN);
+
+	char server_name[DEFAULT_BUFLEN] = {};
+	server_name[0] = 'N';
+	server_name[1] = 'a';
+	server_name[2] = 'm';
+	server_name[3] = 'e';
+	server_name[4] = '=';
+
+	for (int i = 5; i < DEFAULT_BUFLEN; i++) {
+		server_name[i] = entered_server_name[i - 5];
+	}
 
 	//4. Send and recieve data
 
