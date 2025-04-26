@@ -263,7 +263,7 @@ int client_main() {
 		//save number of servers
 		int i = 0;
 		for (i = 0; i < numServer; i++) {
-			cout << i << ". ";
+			cout << i + 1 << ". ";
 			cout << serverInfo[i].name << endl;
 			//serverinfo at i has address
 		}
@@ -294,6 +294,8 @@ int client_main() {
 			char great[7] = "GREAT!";
 
 			while (recvfrom(ConnectionlessSocket, recvBuf, DEFAULT_BUFLEN, 0, (sockaddr*)&addr, &addrSize)) {
+				wait(ConnectionlessSocket, 10, 0);
+
 				if (_stricmp(recvBuf, "YES") == 0) {//if server said yes
 					int iResult = sendto(ConnectionlessSocket, great, strlen(great) + 1, 0, (sockaddr*)&serverInfo[i].addr, sizeof(serverInfo[i].addr));
 					if (iResult == SOCKET_ERROR) {
