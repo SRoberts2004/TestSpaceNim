@@ -235,8 +235,6 @@ int client_main() {
 	strcpy_s(player_name, player_name_header);
 	strcat_s(player_name, user_entered_name);
 
-	cin.getline(player_name, DEFAULT_BUFLEN);
-
 	bool boolChallenge = false;
 	while (boolChallenge == false) {
 		//array of server struct need to go below with socket
