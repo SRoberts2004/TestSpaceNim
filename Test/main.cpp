@@ -353,12 +353,12 @@ int client_main() {
 					}
 
 
-					if (nextDecisionDatagram[0] == 'F') {
+					if (nextDecisionDatagram[0] == 'F' && theGameIsOver != true) {
 						cout << "Enemy has forfeited the game!" << endl;
 						theGameIsOver = true;
 						break;
 					}
-					else if (nextDecisionDatagram[0] == 'C') {
+					else if (nextDecisionDatagram[0] == 'C' && theGameIsOver != true) {
 						while (nextDecisionDatagram[0] == 'C') {
 							cout << "Enemy has sent a chat message: " << nextDecisionDatagram + 1 << endl;
 							recvfrom(ConnectionlessSocket, recvBuf, DEFAULT_BUFLEN, 0, (sockaddr*)&addr, &addrSize);
