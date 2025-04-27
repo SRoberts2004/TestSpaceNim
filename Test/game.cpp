@@ -160,28 +160,29 @@ char* buildForfeitDatagram() {
 };
 
 char* generateNextDecisionDatagram(const char* boardDatagram) {
-	int choice = 2;
-	while (choice == 2) {
-		cout << "What would you like to do?" << endl;
-		cout << "Type \"1\" to make a move" << endl;
-		cout << "Type \"2\" to send a chat message" << endl;
-		cout << "Type \"3\" to forfeit the game" << endl;
-		cout << "Enter your choice here: ";
+	int choice = 0;
+
+	cout << "What would you like to do?" << endl;
+	cout << "Type \"1\" to make a move" << endl;
+	cout << "Type \"2\" to send a chat message" << endl;
+	cout << "Type \"3\" to forfeit the game" << endl;
+	cout << "Enter your choice here: ";
+	cin >> choice;
+	cout << endl;
+
+	while (choice != 1 && choice != 2 && choice != 3) {
+		cout << "Please enter a valid choice: ";
 		cin >> choice;
 		cout << endl;
-
-		while (choice != 1 && choice != 2 && choice != 3) {
-			cout << "Please enter a valid choice: ";
-			cin >> choice;
-			cout << endl;
-		}
-		buildChatDatagram();
 	}
 
 	if (choice == 1) {
 		return buildMoveDatagram(boardDatagram);
 	}
-	else if (choice == 3) {
+	else if (choice == 2) {
+		return buildChatDatagram();
+	}
+	else {
 		return buildForfeitDatagram();
 	}
 };
