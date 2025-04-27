@@ -244,7 +244,7 @@ int server_main() {
 					}
 
 					theGameIsOver = isGameOver(board);
-					if (theGameIsOver != true) {
+					if (theGameIsOver == true) {
 						cout << "Game Over! You Win!" << endl;
 						break;
 					}
@@ -459,6 +459,7 @@ int client_main() {
 						else {
 							cout << "Enemy has made an invalid move!" << endl;
 							cout << "You win by default!" << endl;
+							theGameIsOver = true;
 						}
 					}
 				}
