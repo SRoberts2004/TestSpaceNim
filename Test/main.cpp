@@ -327,9 +327,8 @@ int client_main() {
 					}
 					else if (nextDecisionDatagram[0] == 'C') {
 						while (nextDecisionDatagram[0] == 'C') {
-							nextDecisionDatagram = buildChatDatagram();
 							int iResult = sendto(ConnectionlessSocket, nextDecisionDatagram, strlen(nextDecisionDatagram) + 1, 0, (sockaddr*)&serverInfo[i].addr, sizeof(serverInfo[i].addr));
-							cout << "Chat message sent: " << nextDecisionDatagram + 1 << endl;
+							cout << "Chat message sent: " << nextDecisionDatagram + 1 << endl << endl;
 							nextDecisionDatagram = generateNextDecisionDatagram(board);
 						}
 					}
