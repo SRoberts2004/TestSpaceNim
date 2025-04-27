@@ -165,7 +165,7 @@ int server_main() {
 		}
 		else if (strncmp(recvBuf, Player_CONFIRM, 7) == 0)
 		{
-			cout << recvBuf << " would like to play. Accept? YES or NO:" << endl;
+			cout << recvBuf << " would like to play. Accept? YES or NO: ";
 			cin.getline(sendbuf, DEFAULT_BUFLEN);
 
 			int iResult = sendto(StudySocket, sendbuf, strlen(sendbuf) + 1, 0, (sockaddr*)&addr, sizeof(addr));
@@ -276,6 +276,7 @@ int client_main() {
 		{
 			cout << "Type the number of the server you would like to join:" << endl;
 			cin >> i;
+			i--;
 			cin.ignore(1);
 
 			int recvbuflen = DEFAULT_BUFLEN;
@@ -391,21 +392,21 @@ int client_main() {
 
 
 
-int main() {
-	//loop because client could exit
-	int input = 0;
-	while (input != 3) {
-		cout << "Pick one of the following options (type the number):" << endl << "1. Host" << endl << "2. Join" << endl << "3. Quit" << endl;
-
-		cin >> input;
-		cin.ignore(1);
-		if (input == 1) {
-			server_main();
-		}
-		else if (input == 2) {
-			client_main();
-		}
-		else {}
-	}
-	return 1;
-}
+//int main() {
+//	//loop because client could exit
+//	int input = 0;
+//	while (input != 3) {
+//		cout << "Pick one of the following options (type the number):" << endl << "1. Host" << endl << "2. Join" << endl << "3. Quit" << endl;
+//
+//		cin >> input;
+//		cin.ignore(1);
+//		if (input == 1) {
+//			server_main();
+//		}
+//		else if (input == 2) {
+//			client_main();
+//		}
+//		else {}
+//	}
+//	return 1;
+//}
