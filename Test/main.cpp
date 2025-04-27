@@ -168,8 +168,6 @@ int server_main() {
 			cout << recvBuf << " would like to play. Accept? YES or NO: ";
 			cin.ignore(1);
 			cin.getline(sendbuf, DEFAULT_BUFLEN);
-			cin.ignore(1);
-
 
 			int iResult = sendto(StudySocket, sendbuf, strlen(sendbuf) + 1, 0, (sockaddr*)&addr, sizeof(addr));
 			if (iResult == SOCKET_ERROR) {
@@ -181,7 +179,7 @@ int server_main() {
 		}
 		else if (_stricmp(recvBuf, "GREAT!") == 0) {
 			cout << recvBuf << endl;
-			std::vector<int> gameBoard = generateBoard();
+			int iResult = sendto(StudySocket, boardDatagram, strlen(boardDatagram) + 1, 0, (sockaddr*)&addr, sizeof(addr));
 		}
 	}
 

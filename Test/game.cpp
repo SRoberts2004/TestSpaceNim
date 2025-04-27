@@ -175,16 +175,13 @@ char* generateNextDecisionDatagram(const char* boardDatagram) {
 			cin >> choice;
 			cout << endl;
 		}
-		cout << "Chat message sent!" << endl;
 		buildChatDatagram();
 	}
 
 	if (choice == 1) {
-		cout << "Move sent!" << endl;
 		return buildMoveDatagram(boardDatagram);
 	}
 	else if (choice == 3) {
-		cout << "Forfeit sent!" << endl;
 		return buildForfeitDatagram();
 	}
 };
