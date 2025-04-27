@@ -148,11 +148,10 @@ char* buildChatDatagram() {
 	char* datagram = new char[80];
 	datagram[0] = 'C';
 
-	int i = 0;
-	for (i = 1; i < message.length() + 1; i++) {
-		datagram[i] = message[i - 1];
+	for (int i = 0; i < message.length(); i++) {
+		datagram[i + 1] = message[i];
 	}
-	datagram[i] = '\0';
+	datagram[message.length() + 1] = '\0';
 
 	return datagram;
 };
