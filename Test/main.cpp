@@ -256,10 +256,10 @@ int server_main() {
 			}
 		}
 	}
-
 	//close Socket
 	closesocket(StudySocket);
 	WSACleanup();
+	return 1;
 }
 
 
