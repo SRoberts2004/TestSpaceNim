@@ -255,6 +255,7 @@ int server_main() {
 				}
 			}
 		}
+		break;
 	}
 
 
