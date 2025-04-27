@@ -134,13 +134,12 @@ char* buildMoveDatagram(const char* boardDatagram) {
 char* buildChatDatagram() {
 	cout << "Enter a message under 78 characters here: ";
 	string message;
-	cin >> message;
-	cin.ignore();
+	getline(cin, message);
 	cout << endl;
 
 	while (message.length() > 78) {
 		cout << "Please enter a message that is less than 80 characters: ";
-		cin >> message;
+		getline(cin, message);
 		cout << endl;
 	}
 
@@ -152,6 +151,7 @@ char* buildChatDatagram() {
 		datagram[i] = message[i - 1];
 	}
 	datagram[i] = '\0';
+
 	return datagram;
 };
 
