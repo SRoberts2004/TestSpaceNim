@@ -365,7 +365,7 @@ int client_main() {
 							nextDecisionDatagram = recvBuf;
 						}
 					}
-					else {
+					else if (theGameIsOver != true) {
 						if (isValidMove(nextDecisionDatagram, board)) {
 							updateBoardDatagram(board, nextDecisionDatagram);
 							cout << "Enemy has made a move!" << endl;
