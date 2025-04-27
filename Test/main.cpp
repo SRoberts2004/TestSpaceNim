@@ -424,8 +424,7 @@ int client_main() {
 							cout << "Game Over! You Win!" << endl;
 							break;
 						}
-						recvfrom(ConnectionlessSocket, recvBuf, DEFAULT_BUFLEN, 0, (sockaddr*)&addr, &addrSize);
-						nextDecisionDatagram = recvBuf;
+						recvfrom(ConnectionlessSocket, nextDecisionDatagram, DEFAULT_BUFLEN, 0, (sockaddr*)&addr, &addrSize);
 					}
 
 
