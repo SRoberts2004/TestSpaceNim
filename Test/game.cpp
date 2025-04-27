@@ -246,7 +246,6 @@ bool isValidMove(const char* moveDatagram, const char* boardDatagram) {
 //		updateBoardDatagram(testBoard, move);
 //	}
 //
-//
 //	return 0;
 //}
 
