@@ -94,7 +94,6 @@ char* buildMoveDatagram(const char* boardDatagram) {
 
 	cout << "Enter the pile number you want to remove stones from: ";
 	cin >> pile;
-	cin.ignore();
 	cout << endl;
 	while (pile < 1 || pile >(boardDatagram[0] - '0')) {
 		cout << "Please enter a valid pile number: ";
@@ -105,7 +104,6 @@ char* buildMoveDatagram(const char* boardDatagram) {
 	while(boardDatagram[(pile - 1) * 2 + 1] == '0' && boardDatagram[(pile - 1) * 2 + 2] == '0') {
 		cout << "That pile is empty. Please select a different pile: ";
 		cin >> pile;
-		cin.ignore();
 		cout << endl;
 	}
 
@@ -115,7 +113,6 @@ char* buildMoveDatagram(const char* boardDatagram) {
 	while (stones < 1 || stones >((boardDatagram[(pile - 1) * 2 + 1] - '0') * 10) + ((boardDatagram[(pile - 1) * 2 + 2] - '0'))) {
 		cout << "Please enter a valid number of stones to remove: ";
 		cin >> stones;
-		cin.ignore();
 		cout << endl;
 	}
 
