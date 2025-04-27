@@ -117,7 +117,6 @@ int server_main() {
 	char entered_server_name[DEFAULT_BUFLEN] = {};
 	cout << "Enter your name here: ";
 	cin.getline(entered_server_name, DEFAULT_BUFLEN);
-	cin.ignore(1);
 
 	char server_name[DEFAULT_BUFLEN] = {};
 	server_name[0] = 'N';
@@ -167,7 +166,10 @@ int server_main() {
 		else if (strncmp(recvBuf, Player_CONFIRM, 7) == 0)
 		{
 			cout << recvBuf << " would like to play. Accept? YES or NO: ";
+			cin.ignore(1);
 			cin.getline(sendbuf, DEFAULT_BUFLEN);
+			cin.ignore(1);
+
 
 			int iResult = sendto(StudySocket, sendbuf, strlen(sendbuf) + 1, 0, (sockaddr*)&addr, sizeof(addr));
 			if (iResult == SOCKET_ERROR) {
@@ -247,7 +249,6 @@ int client_main() {
 	player_name[5] = 'r';
 	player_name[6] = '=';
 	cin.getline(user_entered_name, DEFAULT_BUFLEN);
-	cin.ignore(1);
 
 	for (int i = 7; i < DEFAULT_BUFLEN; i++) {
 		player_name[i] = user_entered_name[i - 7];
