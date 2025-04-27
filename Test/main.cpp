@@ -348,11 +348,10 @@ int client_main() {
 							cout << "Game Over! You Win!" << endl;
 							break;
 						}
-					}
-
-
 						recvfrom(ConnectionlessSocket, recvBuf, DEFAULT_BUFLEN, 0, (sockaddr*)&addr, &addrSize);
 						nextDecisionDatagram = recvBuf;
+					}
+
 
 						if (nextDecisionDatagram[0] == 'F') {
 							cout << "Enemy has forfeited the game!" << endl;
