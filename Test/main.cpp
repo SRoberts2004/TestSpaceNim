@@ -209,7 +209,7 @@ int server_main() {
 						theGameIsOver = isGameOver(board);
 						if (theGameIsOver == true) {
 							cout << "Game Over! You Lose!" << endl;
-							break;
+							return 1;
 						}
 					}
 					else {
@@ -255,7 +255,6 @@ int server_main() {
 				}
 			}
 		}
-		return 1;
 	}
 	//close Socket
 	closesocket(StudySocket);
