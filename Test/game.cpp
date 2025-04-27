@@ -135,7 +135,7 @@ char* buildChatDatagram() {
 	cout << "Enter a message under 78 characters here: ";
 	string message;
 
-	cin.ignore();
+	//cin.ignore();
 	getline(cin, message);
 	cout << endl;
 
