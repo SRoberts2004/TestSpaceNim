@@ -132,12 +132,13 @@ char* buildMoveDatagram(const char* boardDatagram) {
 };
 
 char* buildChatDatagram() {
-	cout << "Enter a message under 79 characters here: ";
+	cout << "Enter a message under 78 characters here: ";
 	string message;
 	cin >> message;
+	cin.ignore();
 	cout << endl;
 
-	while (message.length() > 79) {
+	while (message.length() > 78) {
 		cout << "Please enter a message that is less than 80 characters: ";
 		cin >> message;
 		cout << endl;
@@ -146,23 +147,14 @@ char* buildChatDatagram() {
 	char* datagram = new char[80];
 	datagram[0] = 'C';
 
-	for (int i = 1; i < message.length() + 1; i++) {
+	int i = 0;
+	for (i = 1; i < message.length() + 1; i++) {
 		datagram[i] = message[i - 1];
 	}
-	trimEnd(datagram);
+	datagram[i] = '\0';
 	return datagram;
 };
 
-void trimEnd(char* str) {
-	if (str == nullptr) {
-		return;
-	}
-	int index = strlen(str) - 1;
-	while (index >= 0 && (str[index] == ' ' || str[index] == '\t' || str[index] == '\n' || str[index] == '\r' || str[index] == '\0')) {
-		str[index] = '\0';
-		index--;
-	}
-};
 
 char* buildForfeitDatagram() {
 	char* datagram = new char[2];
@@ -174,18 +166,19 @@ char* buildForfeitDatagram() {
 char* generateNextDecisionDatagram(const char* boardDatagram) {
 	int choice = 0;
 
-	cout << "What would you like to do?" << endl;
-	cout << "Type \"1\" to make a move" << endl;
-	cout << "Type \"2\" to send a chat message" << endl;
-	cout << "Type \"3\" to forfeit the game" << endl;
-	cout << "Enter your choice here: ";
-	cin >> choice;
-	cout << endl;
-
-	while (choice != 1 && choice != 2 && choice != 3) {
-		cout << "Please enter a valid choice: ";
+	while (true) {
+		cout << "What would you like to do?" << endl;
+		cout << "Type \"1\" to make a move" << endl;
+		cout << "Type \"2\" to send a chat message" << endl;
+		cout << "Type \"3\" to forfeit the game" << endl;
+		cout << "Enter your choice here: ";
 		cin >> choice;
 		cout << endl;
+
+		if (choice == 1 || choice == 2 || choice == 3) {
+			break;
+		}
+		cout << "Please enter a valid choice." << endl;
 	}
 
 	if (choice == 1) {
