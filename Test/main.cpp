@@ -178,10 +178,83 @@ int server_main() {
 			}
 		}
 		else if (_stricmp(recvBuf, "GREAT!") == 0) {
-			cout << recvBuf << endl;
+			cout << "Let the game begin..." << endl << endl;
 			int iResult = sendto(StudySocket, boardDatagram, strlen(boardDatagram) + 1, 0, (sockaddr*)&addr, sizeof(addr));
+
+			bool theGameIsOver = false;
+			char* nextDecisionDatagram;
+			char* board = boardDatagram;
+			while (theGameIsOver == false) {
+
+				if (nextDecisionDatagram[0] == 'F' && theGameIsOver != true) {
+					cout << "Enemy has forfeited the game!" << endl;
+					theGameIsOver = true;
+					break;
+				}
+				else if (nextDecisionDatagram[0] == 'C' && theGameIsOver != true) {
+					while (nextDecisionDatagram[0] == 'C') {
+						cout << "Enemy has sent a chat message: " << nextDecisionDatagram + 1 << endl;
+						recvfrom(StudySocket, recvBuf, DEFAULT_BUFLEN, 0, (sockaddr*)&addr, &addrSize);
+						nextDecisionDatagram = recvBuf;
+					}
+				}
+				else if (theGameIsOver != true) {
+					if (isValidMove(nextDecisionDatagram, board)) {
+						updateBoardDatagram(board, nextDecisionDatagram);
+						cout << "Enemy has made a move!" << endl;
+						cout << "The board is now:" << endl;
+						displayBoard(board);
+
+						theGameIsOver = isGameOver(board);
+						if (theGameIsOver == true) {
+							cout << "Game Over! You Lose!" << endl;
+							break;
+						}
+					}
+					else {
+						cout << "Enemy has made an invalid move!" << endl;
+						cout << "You win by default!" << endl;
+					}
+				}
+
+				nextDecisionDatagram = generateNextDecisionDatagram(board);
+				if (nextDecisionDatagram[0] == 'C') {
+					while (nextDecisionDatagram[0] == 'C') {
+						int iResult = sendto(StudySocket, nextDecisionDatagram, strlen(nextDecisionDatagram) + 1, 0, (sockaddr*)&addr, sizeof(addr));
+						cout << "Chat message sent: " << nextDecisionDatagram + 1 << endl << endl;
+						nextDecisionDatagram = generateNextDecisionDatagram(board);
+					}
+				}
+
+				if (nextDecisionDatagram[0] == 'F') {
+					cout << "You have forfeited the game!" << endl;
+					int iResult = sendto(StudySocket, nextDecisionDatagram, strlen(nextDecisionDatagram) + 1, 0, (sockaddr*)&addr, sizeof(addr));
+					theGameIsOver = true;
+				}
+				else {
+					updateBoardDatagram(board, nextDecisionDatagram);
+					displayBoard(board);
+					int iResult = sendto(StudySocket, board, strlen(board) + 1, 0, (sockaddr*)&addr, sizeof(addr));
+					if (iResult == SOCKET_ERROR) {
+						cout << "send failed: " << WSAGetLastError() << endl;
+						closesocket(StudySocket);
+						WSACleanup();
+						return 1;
+					}
+
+					theGameIsOver = isGameOver(board);
+					if (theGameIsOver == true) {
+						cout << "Game Over! You Win!" << endl;
+						break;
+					}
+					recvfrom(StudySocket, recvBuf, DEFAULT_BUFLEN, 0, (sockaddr*)&addr, &addrSize);
+					nextDecisionDatagram = recvBuf;
+				}
+			}
 		}
 	}
+
+
 
 	//close Socket
 	closesocket(StudySocket);
@@ -353,17 +426,18 @@ int client_main() {
 					}
 
 
-					if (nextDecisionDatagram[0] == 'F' && theGameIsOver != true) {
-						cout << "Enemy has forfeited the game!" << endl;
-						theGameIsOver = true;
-						break;
-					}
-					else if (nextDecisionDatagram[0] == 'C' && theGameIsOver != true) {
+					if (nextDecisionDatagram[0] == 'C' && theGameIsOver != true) {
 						while (nextDecisionDatagram[0] == 'C') {
 							cout << "Enemy has sent a chat message: " << nextDecisionDatagram + 1 << endl;
 							recvfrom(ConnectionlessSocket, recvBuf, DEFAULT_BUFLEN, 0, (sockaddr*)&addr, &addrSize);
 							nextDecisionDatagram = recvBuf;
 						}
+					}
+
+					if (nextDecisionDatagram[0] == 'F' && theGameIsOver != true) {
+						cout << "Enemy has forfeited the game!" << endl;
+						theGameIsOver = true;
+						break;
 					}
 					else if (theGameIsOver != true) {
 						if (isValidMove(nextDecisionDatagram, board)) {
@@ -371,6 +445,7 @@ int client_main() {
 							cout << "Enemy has made a move!" << endl;
 							cout << "The board is now:" << endl;
 							displayBoard(board);
+							cout << endl;
 
 							theGameIsOver = isGameOver(board);
 							if (theGameIsOver == true) {
