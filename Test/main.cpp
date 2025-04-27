@@ -235,7 +235,7 @@ int server_main() {
 				else {
 					updateBoardDatagram(board, nextDecisionDatagram);
 					displayBoard(board);
-					int iResult = sendto(StudySocket, board, strlen(board) + 1, 0, (sockaddr*)&addr, sizeof(addr));
+					int iResult = sendto(StudySocket, nextDecisionDatagram, strlen(nextDecisionDatagram) + 1, 0, (sockaddr*)&addr, sizeof(addr));
 					if (iResult == SOCKET_ERROR) {
 						cout << "send failed: " << WSAGetLastError() << endl;
 						closesocket(StudySocket);
@@ -411,7 +411,7 @@ int client_main() {
 					else {
 						updateBoardDatagram(board, nextDecisionDatagram);
 						displayBoard(board);
-						int iResult = sendto(ConnectionlessSocket, board, strlen(board) + 1, 0, (sockaddr*)&serverInfo[i].addr, sizeof(serverInfo[i].addr));
+						int iResult = sendto(ConnectionlessSocket, nextDecisionDatagram, strlen(nextDecisionDatagram) + 1, 0, (sockaddr*)&serverInfo[i].addr, sizeof(serverInfo[i].addr));
 						if (iResult == SOCKET_ERROR) {
 							cout << "send failed: " << WSAGetLastError() << endl;
 							closesocket(ConnectionlessSocket);
