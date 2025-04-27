@@ -186,18 +186,18 @@ int server_main() {
 			char* nextDecisionDatagram = recvBuf;
 			char* board = boardDatagram;
 			while (theGameIsOver == false) {
-
-				if (nextDecisionDatagram[0] == 'F' && theGameIsOver != true) {
-					cout << "Enemy has forfeited the game!" << endl;
-					theGameIsOver = true;
-					break;
-				}
-				else if (nextDecisionDatagram[0] == 'C' && theGameIsOver != true) {
+				if (nextDecisionDatagram[0] == 'C' && theGameIsOver != true) {
 					while (nextDecisionDatagram[0] == 'C') {
 						cout << "Enemy has sent a chat message: " << nextDecisionDatagram + 1 << endl;
 						recvfrom(StudySocket, recvBuf, DEFAULT_BUFLEN, 0, (sockaddr*)&addr, &addrSize);
 						nextDecisionDatagram = recvBuf;
 					}
+				}
+
+				if (nextDecisionDatagram[0] == 'F' && theGameIsOver != true) {
+					cout << "Enemy has forfeited the game!" << endl;
+					theGameIsOver = true;
+					break;
 				}
 				else if (theGameIsOver != true) {
 					if (isValidMove(nextDecisionDatagram, board)) {
@@ -216,10 +216,10 @@ int server_main() {
 						cout << "Enemy has made an invalid move!" << endl;
 						cout << "You win by default!" << endl;
 					}
+					nextDecisionDatagram = generateNextDecisionDatagram(board);
 				}
 
-				nextDecisionDatagram = generateNextDecisionDatagram(board);
-				if (nextDecisionDatagram[0] == 'C') {
+				if (nextDecisionDatagram[0] == 'C' && theGameIsOver != true) {
 					while (nextDecisionDatagram[0] == 'C') {
 						int iResult = sendto(StudySocket, nextDecisionDatagram, strlen(nextDecisionDatagram) + 1, 0, (sockaddr*)&addr, sizeof(addr));
 						cout << "Chat message sent: " << nextDecisionDatagram + 1 << endl << endl;
@@ -227,7 +227,7 @@ int server_main() {
 					}
 				}
 
-				if (nextDecisionDatagram[0] == 'F') {
+				if (nextDecisionDatagram[0] == 'F' && theGameIsOver != true) {
 					cout << "You have forfeited the game!" << endl;
 					int iResult = sendto(StudySocket, nextDecisionDatagram, strlen(nextDecisionDatagram) + 1, 0, (sockaddr*)&addr, sizeof(addr));
 					theGameIsOver = true;
@@ -244,12 +244,14 @@ int server_main() {
 					}
 
 					theGameIsOver = isGameOver(board);
-					if (theGameIsOver == true) {
+					if (theGameIsOver != true) {
 						cout << "Game Over! You Win!" << endl;
 						break;
 					}
-					recvfrom(StudySocket, recvBuf, DEFAULT_BUFLEN, 0, (sockaddr*)&addr, &addrSize);
-					nextDecisionDatagram = recvBuf;
+					else {
+						recvfrom(StudySocket, recvBuf, DEFAULT_BUFLEN, 0, (sockaddr*)&addr, &addrSize);
+						nextDecisionDatagram = recvBuf;
+					}
 				}
 			}
 		}
