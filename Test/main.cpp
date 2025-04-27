@@ -180,9 +180,10 @@ int server_main() {
 		else if (_stricmp(recvBuf, "GREAT!") == 0) {
 			cout << "Let the game begin..." << endl << endl;
 			int iResult = sendto(StudySocket, boardDatagram, strlen(boardDatagram) + 1, 0, (sockaddr*)&addr, sizeof(addr));
+			recvfrom(StudySocket, recvBuf, DEFAULT_BUFLEN, 0, (sockaddr*)&addr, &addrSize);
 
 			bool theGameIsOver = false;
-			char* nextDecisionDatagram;
+			char* nextDecisionDatagram = recvBuf;
 			char* board = boardDatagram;
 			while (theGameIsOver == false) {
 
