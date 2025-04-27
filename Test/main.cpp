@@ -296,7 +296,7 @@ int client_main() {
 			char great[7] = "GREAT!";
 
 			recvfrom(ConnectionlessSocket, recvBuf, DEFAULT_BUFLEN, 0, (sockaddr*)&addr, &addrSize);
-			wait(ConnectionlessSocket, 15, 0);
+			wait(ConnectionlessSocket, 7, 0);
 
 			if (_stricmp(recvBuf, "YES") == 0) {//if server said yes
 				int iResult = sendto(ConnectionlessSocket, great, strlen(great) + 1, 0, (sockaddr*)&serverInfo[i].addr, sizeof(serverInfo[i].addr));
