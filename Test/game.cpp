@@ -23,18 +23,21 @@ vector<int> generateBoard() {
 	int numOfPiles;
 	cout << "Enter the number of piles you want here: ";
 	cin >> numOfPiles;
+	cin.ignore();
 
 	while (numOfPiles > 9 || numOfPiles < 3) {
 		if (numOfPiles > 9) {
 			cout << "You cannot have more than 9 piles." << endl;
 			cout << "Enter a valid number of piles here: ";
 			cin >> numOfPiles;
+			cin.ignore();
 			cout << endl;
 		}
 		if (numOfPiles < 3) {
 			cout << "You cannot have less than 3 piles.";
 			cout << "Enter a valid number of piles here: ";
 			cin >> numOfPiles;
+			cin.ignore();
 			cout << endl;
 		}
 	}
@@ -44,18 +47,21 @@ vector<int> generateBoard() {
 	for (int i = 0; i < numOfPiles; i++) {
 		cout << "Enter the number of stones you'd like in pile #" << i + 1 << " here: ";
 		cin >> board.at(i);
+		cin.ignore();
 
 		while (board.at(i) > 20 || board.at(i) < 1) {
 			if (board.at(i) < 1) {
 				cout << "You can not have less than 1 stone in a pile. " << '\n'
 					<< "Please enter in a number that is more than 1: ";
 				cin >> board.at(i);
+				cin.ignore();
 				cout << endl;
 			}
 			else {
 				cout << "You can not have more than 20 stones in a pile. " << '\n'
 					<< "Please enter in a number that is less than 20: ";
 				cin >> board.at(i);
+				cin.ignore();
 				cout << endl;
 			}
 		}
@@ -94,25 +100,30 @@ char* buildMoveDatagram(const char* boardDatagram) {
 
 	cout << "Enter the pile number you want to remove stones from: ";
 	cin >> pile;
+	cin.ignore();
 	cout << endl;
 	while (pile < 1 || pile >(boardDatagram[0] - '0')) {
 		cout << "Please enter a valid pile number: ";
 		cin >> pile;
+		cin.ignore();
 		cout << endl;
 	}
 
 	while(boardDatagram[(pile - 1) * 2 + 1] == '0' && boardDatagram[(pile - 1) * 2 + 2] == '0') {
 		cout << "That pile is empty. Please select a different pile: ";
 		cin >> pile;
+		cin.ignore();
 		cout << endl;
 	}
 
 	cout << "Enter the number of stones you want to remove from pile #" << pile << ": ";
 	cin >> stones;
+	cin.ignore();
 	cout << endl;
 	while (stones < 1 || stones >((boardDatagram[(pile - 1) * 2 + 1] - '0') * 10) + ((boardDatagram[(pile - 1) * 2 + 2] - '0'))) {
 		cout << "Please enter a valid number of stones to remove: ";
 		cin >> stones;
+		cin.ignore();
 		cout << endl;
 	}
 
