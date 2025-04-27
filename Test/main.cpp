@@ -392,21 +392,21 @@ int client_main() {
 
 
 
-//int main() {
-//	//loop because client could exit
-//	int input = 0;
-//	while (input != 3) {
-//		cout << "Pick one of the following options (type the number):" << endl << "1. Host" << endl << "2. Join" << endl << "3. Quit" << endl;
-//
-//		cin >> input;
-//		cin.ignore(1);
-//		if (input == 1) {
-//			server_main();
-//		}
-//		else if (input == 2) {
-//			client_main();
-//		}
-//		else {}
-//	}
-//	return 1;
-//}
+int main() {
+	//loop because client could exit
+	int input = 0;
+	while (input != 3) {
+		cout << "Pick one of the following options (type the number):" << endl << "1. Host" << endl << "2. Join" << endl << "3. Quit" << endl;
+
+		cin >> input;
+		cin.ignore(1);
+		if (input == 1) {
+			server_main();
+		}
+		else if (input == 2) {
+			client_main();
+		}
+		else {}
+	}
+	return 1;
+}

@@ -228,21 +228,21 @@ bool isValidMove(const char* moveDatagram, const char* boardDatagram) {
 	return true;
 };
 
-int main() {
-
-	vector<int> board = generateBoard();
-	char* testBoard = buildBoardDatagram(board);
-	while (true) {
-		cout << "Current board:" << endl;
-		displayBoard(testBoard);
-
-		char* move = buildMoveDatagram(testBoard);
-		updateBoardDatagram(testBoard, move);
-	}
-
-
-	return 0;
-}
+//int main() {
+//
+//	vector<int> board = generateBoard();
+//	char* testBoard = buildBoardDatagram(board);
+//	while (true) {
+//		cout << "Current board:" << endl;
+//		displayBoard(testBoard);
+//
+//		char* move = buildMoveDatagram(testBoard);
+//		updateBoardDatagram(testBoard, move);
+//	}
+//
+//
+//	return 0;
+//}
 
 /*
 Host Behavior:
