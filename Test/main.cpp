@@ -319,18 +319,17 @@ int client_main() {
 				while (theGameIsOver == false) {
 
 					nextDecisionDatagram = generateNextDecisionDatagram(board);
-
-					if (nextDecisionDatagram[0] == 'F') {
-						cout << "You have forfeited the game!" << endl;
-						int iResult = sendto(ConnectionlessSocket, nextDecisionDatagram, strlen(nextDecisionDatagram) + 1, 0, (sockaddr*)&serverInfo[i].addr, sizeof(serverInfo[i].addr));
-						theGameIsOver = true;
-					}
-					else if (nextDecisionDatagram[0] == 'C') {
+					if (nextDecisionDatagram[0] == 'C') {
 						while (nextDecisionDatagram[0] == 'C') {
 							int iResult = sendto(ConnectionlessSocket, nextDecisionDatagram, strlen(nextDecisionDatagram) + 1, 0, (sockaddr*)&serverInfo[i].addr, sizeof(serverInfo[i].addr));
 							cout << "Chat message sent: " << nextDecisionDatagram + 1 << endl << endl;
 							nextDecisionDatagram = generateNextDecisionDatagram(board);
 						}
+					}
+					else if (nextDecisionDatagram[0] == 'F') {
+						cout << "You have forfeited the game!" << endl;
+						int iResult = sendto(ConnectionlessSocket, nextDecisionDatagram, strlen(nextDecisionDatagram) + 1, 0, (sockaddr*)&serverInfo[i].addr, sizeof(serverInfo[i].addr));
+						theGameIsOver = true;
 					}
 					else {
 						updateBoardDatagram(board, nextDecisionDatagram);
@@ -353,36 +352,36 @@ int client_main() {
 					}
 
 
-						if (nextDecisionDatagram[0] == 'F') {
-							cout << "Enemy has forfeited the game!" << endl;
-							theGameIsOver = true;
-							break;
+					if (nextDecisionDatagram[0] == 'F') {
+						cout << "Enemy has forfeited the game!" << endl;
+						theGameIsOver = true;
+						break;
+					}
+					else if (nextDecisionDatagram[0] == 'C') {
+						while (nextDecisionDatagram[0] == 'C') {
+							cout << "Enemy has sent a chat message: " << nextDecisionDatagram + 1 << endl;
+							recvfrom(ConnectionlessSocket, recvBuf, DEFAULT_BUFLEN, 0, (sockaddr*)&addr, &addrSize);
+							nextDecisionDatagram = recvBuf;
 						}
-						else if (nextDecisionDatagram[0] == 'C') {
-							while (nextDecisionDatagram[0] == 'C') {
-								cout << "Enemy has sent a chat message: " << nextDecisionDatagram + 1 << endl;
-								recvfrom(ConnectionlessSocket, recvBuf, DEFAULT_BUFLEN, 0, (sockaddr*)&addr, &addrSize);
-								nextDecisionDatagram = recvBuf;
+					}
+					else {
+						if (isValidMove(nextDecisionDatagram, board)) {
+							updateBoardDatagram(board, nextDecisionDatagram);
+							cout << "Enemy has made a move!" << endl;
+							cout << "The board is now:" << endl;
+							displayBoard(board);
+
+							theGameIsOver = isGameOver(board);
+							if (theGameIsOver == true) {
+								cout << "Game Over! You Lose!" << endl;
+								break;
 							}
 						}
 						else {
-							if (isValidMove(nextDecisionDatagram, board)) {
-								updateBoardDatagram(board, nextDecisionDatagram);
-								cout << "Enemy has made a move!" << endl;
-								cout << "The board is now:" << endl;
-								displayBoard(board);
-
-								theGameIsOver = isGameOver(board);
-								if (theGameIsOver == true) {
-									cout << "Game Over! You Lose!" << endl;
-									break;
-								}
-							}
-							else {
-								cout << "Enemy has made an invalid move!" << endl;
-								cout << "You win by default!" << endl;
-							}
+							cout << "Enemy has made an invalid move!" << endl;
+							cout << "You win by default!" << endl;
 						}
+					}
 				}
 			}
 			else if (_stricmp(recvBuf, "NO") == 0) {//if server said no
