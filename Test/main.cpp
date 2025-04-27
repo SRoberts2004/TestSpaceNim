@@ -255,11 +255,11 @@ int server_main() {
 				}
 			}
 		}
+		return 1;
 	}
 	//close Socket
 	closesocket(StudySocket);
 	WSACleanup();
-	return 1;
 }
 
 
