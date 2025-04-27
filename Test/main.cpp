@@ -326,7 +326,8 @@ int client_main() {
 							nextDecisionDatagram = generateNextDecisionDatagram(board);
 						}
 					}
-					else if (nextDecisionDatagram[0] == 'F') {
+					
+					if (nextDecisionDatagram[0] == 'F') {
 						cout << "You have forfeited the game!" << endl;
 						int iResult = sendto(ConnectionlessSocket, nextDecisionDatagram, strlen(nextDecisionDatagram) + 1, 0, (sockaddr*)&serverInfo[i].addr, sizeof(serverInfo[i].addr));
 						theGameIsOver = true;
