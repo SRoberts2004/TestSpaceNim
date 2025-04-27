@@ -159,7 +159,7 @@ char* buildForfeitDatagram() {
 	return datagram;
 };
 
-char* generateNextDecisionDatagram(char* boardDatagram) {
+char* generateNextDecisionDatagram(const char* boardDatagram) {
 	int choice = 0;
 	while (choice != 1 && choice != 3) {
 		cout << "What would you like to do?" << endl;

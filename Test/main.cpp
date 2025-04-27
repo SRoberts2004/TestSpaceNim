@@ -316,10 +316,10 @@ int client_main() {
 				char* board = recvBuf;
 				displayBoard(board);
 
-				char* enemyMoveDatagram;
 				char* nextDecisionDatagram;
 
-				while (theGameIsOver = false) {
+				while (theGameIsOver == false) {
+
 					nextDecisionDatagram = generateNextDecisionDatagram(board);
 
 					if (nextDecisionDatagram[0] == 'F') {
