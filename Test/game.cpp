@@ -149,7 +149,19 @@ char* buildChatDatagram() {
 	for (int i = 1; i < message.length() + 1; i++) {
 		datagram[i] = message[i - 1];
 	}
+	trimEnd(datagram);
 	return datagram;
+};
+
+void trimEnd(char* str) {
+	if (str == nullptr) {
+		return;
+	}
+	int index = strlen(str) - 1;
+	while (index >= 0 && (str[index] == ' ' || str[index] == '\t' || str[index] == '\n' || str[index] == '\r' || str[index] == '\0')) {
+		str[index] = '\0';
+		index--;
+	}
 };
 
 char* buildForfeitDatagram() {

@@ -39,3 +39,4 @@ char* generateNextDecisionDatagram(const char* boardDatagram);
 bool isGameOver(const char* boardDatagram);
 bool isValidMove(const char* moveDatagram, const char* boardDatagram);
 void updateBoardDatagram(char* boardDatagram, const char* moveDatagram);
+void trimEnd(char* str);
