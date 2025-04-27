@@ -160,8 +160,8 @@ char* buildForfeitDatagram() {
 };
 
 char* generateNextDecisionDatagram(const char* boardDatagram) {
-	int choice = 0;
-	while (choice != 1 && choice != 3) {
+	int choice = 2;
+	while (choice == 2) {
 		cout << "What would you like to do?" << endl;
 		cout << "Type \"1\" to make a move" << endl;
 		cout << "Type \"2\" to send a chat message" << endl;
@@ -170,7 +170,7 @@ char* generateNextDecisionDatagram(const char* boardDatagram) {
 		cin >> choice;
 		cout << endl;
 
-		while (choice < 1 || choice > 3) {
+		while (choice != 1 && choice != 2 && choice != 3) {
 			cout << "Please enter a valid choice: ";
 			cin >> choice;
 			cout << endl;
