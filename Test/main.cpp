@@ -294,33 +294,21 @@ int client_main() {
 
 			char great[7] = "GREAT!";
 
-			while (true) {
-				int recvLen = recvfrom(ConnectionlessSocket, recvBuf, DEFAULT_BUFLEN, 0, (sockaddr*)&addr, &addrSize);
-				if (recvLen > 0) {
-					if (_stricmp(recvBuf, "YES") == 0) { // if server said yes
-						int iResult = sendto(ConnectionlessSocket, great, strlen(great) + 1, 0, (sockaddr*)&serverInfo[i].addr, sizeof(serverInfo[i].addr));
-						if (iResult == SOCKET_ERROR) {
-							cout << "send failed: " << WSAGetLastError() << endl;
-							closesocket(ConnectionlessSocket);
-							WSACleanup();
-							return 1;
-						}
-						boolChallenge = true;
-						break;
-					}
-					else if (_stricmp(recvBuf, "NO") == 0) { // if server said no
-						cout << "Game Denied" << endl;
-						break;
-					}
+			recvfrom(ConnectionlessSocket, recvBuf, DEFAULT_BUFLEN, 0, (sockaddr*)&addr, &addrSize);
+			wait(ConnectionlessSocket, 15, 0);
+
+			if (_stricmp(recvBuf, "YES") == 0) {//if server said yes
+				int iResult = sendto(ConnectionlessSocket, great, strlen(great) + 1, 0, (sockaddr*)&serverInfo[i].addr, sizeof(serverInfo[i].addr));
+				if (iResult == SOCKET_ERROR) {
+					cout << "send failed: " << WSAGetLastError() << endl;
+					closesocket(ConnectionlessSocket);
+					WSACleanup();
+					return 1;
 				}
-				else if (recvLen == SOCKET_ERROR && WSAGetLastError() == WSAETIMEDOUT) {
-					cout << "Timeout waiting for server response." << endl;
-					break;
-				}
-				else {
-					cout << "recvfrom failed: " << WSAGetLastError() << endl;
-					break;
-				}
+				boolChallenge = true;
+			}
+			else if (_stricmp(recvBuf, "NO") == 0) {//if server said no
+				cout << "Game Denied" << endl;
 			}
 		}
 	}
