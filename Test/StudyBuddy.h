@@ -35,7 +35,7 @@ char* buildBoardDatagram(const std::vector<int>& board);
 char* buildMoveDatagram(const char* boardDatagram);
 char* buildChatDatagram();
 char* buildForfeitDatagram();
-void generateNextDecisionDatagram(const char* boardDatagram);
+char* generateNextDecisionDatagram(const char* boardDatagram);
 bool isGameOver(const char* boardDatagram);
 bool isValidMove(const char* moveDatagram, const char* boardDatagram);
 void updateBoardDatagram(char* boardDatagram, const char* moveDatagram);
