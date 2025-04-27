@@ -173,6 +173,7 @@ char* generateNextDecisionDatagram(const char* boardDatagram) {
 		cout << "Type \"3\" to forfeit the game" << endl;
 		cout << "Enter your choice here: ";
 		cin >> choice;
+		cin.ignore();
 		cout << endl;
 
 		if (choice == 1 || choice == 2 || choice == 3) {
