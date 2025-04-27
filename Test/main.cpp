@@ -255,10 +255,7 @@ int server_main() {
 				}
 			}
 		}
-		break;
 	}
-
-
 
 	//close Socket
 	closesocket(StudySocket);
